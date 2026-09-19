@@ -80,17 +80,21 @@ export const indexSeries = (() => {
   return out;
 })();
 
+const BASE_FARES = [13800, 9200, 7400, 5900, 5400];
+const ELASTICITIES = [1.62, 0.94, 0.61, 0.28, 0.12];
+const WINDOW_MULT = [1.9, 1.32, 1.05, 0.86, 0.8];
+
 export const leadTimeCurve = LEAD_WINDOWS.map((w, i) => ({
   window: w,
-  fare: Math.round([13800, 9200, 7400, 5900, 5400][i] * (1 + (rnd() - 0.5) * 0.04)),
-  elasticity: Number((-[1.62, 0.94, 0.61, 0.28, 0.12][i]).toFixed(2)),
+  fare: Math.round((BASE_FARES[i] ?? 6000) * (1 + (rnd() - 0.5) * 0.04)),
+  elasticity: Number((-(ELASTICITIES[i] ?? 0)).toFixed(2)),
 }));
 
 export const heatmap = ROUTES.slice(0, 8).map((r) => ({
   route: r.code,
-  cells: LEAD_WINDOWS.map((w) => ({
+  cells: LEAD_WINDOWS.map((w, i) => ({
     window: w,
-    value: Number((r.avgFare * [1.9, 1.32, 1.05, 0.86, 0.8][LEAD_WINDOWS.indexOf(w)]).toFixed(0)),
+    value: Math.round(r.avgFare * (WINDOW_MULT[i] ?? 1)),
   })),
 }));
 
