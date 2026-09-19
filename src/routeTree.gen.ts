@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BasketRouteImport } from './routes/basket'
+import { Route as QualityRouteImport } from './routes/quality'
+import { Route as SchedulesRouteImport } from './routes/schedules'
+import { Route as ScrapersRouteImport } from './routes/scrapers'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BasketRoute = BasketRouteImport.update({
+  id: '/basket',
+  path: '/basket',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QualityRoute = QualityRouteImport.update({
+  id: '/quality',
+  path: '/quality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchedulesRoute = SchedulesRouteImport.update({
+  id: '/schedules',
+  path: '/schedules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScrapersRoute = ScrapersRouteImport.update({
+  id: '/scrapers',
+  path: '/scrapers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/basket': typeof BasketRoute
+  '/quality': typeof QualityRoute
+  '/schedules': typeof SchedulesRoute
+  '/scrapers': typeof ScrapersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/basket': typeof BasketRoute
+  '/quality': typeof QualityRoute
+  '/schedules': typeof SchedulesRoute
+  '/scrapers': typeof ScrapersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/basket': typeof BasketRoute
+  '/quality': typeof QualityRoute
+  '/schedules': typeof SchedulesRoute
+  '/scrapers': typeof ScrapersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/basket' | '/quality' | '/schedules' | '/scrapers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/basket' | '/quality' | '/schedules' | '/scrapers'
+  id: '__root__' | '/' | '/basket' | '/quality' | '/schedules' | '/scrapers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BasketRoute: typeof BasketRoute
+  QualityRoute: typeof QualityRoute
+  SchedulesRoute: typeof SchedulesRoute
+  ScrapersRoute: typeof ScrapersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/basket': {
+      id: '/basket'
+      path: '/basket'
+      fullPath: '/basket'
+      preLoaderRoute: typeof BasketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quality': {
+      id: '/quality'
+      path: '/quality'
+      fullPath: '/quality'
+      preLoaderRoute: typeof QualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schedules': {
+      id: '/schedules'
+      path: '/schedules'
+      fullPath: '/schedules'
+      preLoaderRoute: typeof SchedulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scrapers': {
+      id: '/scrapers'
+      path: '/scrapers'
+      fullPath: '/scrapers'
+      preLoaderRoute: typeof ScrapersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BasketRoute: BasketRoute,
+  QualityRoute: QualityRoute,
+  SchedulesRoute: SchedulesRoute,
+  ScrapersRoute: ScrapersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
